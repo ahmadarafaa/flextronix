@@ -1,22 +1,417 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  OnDestroy,
-  ChangeDetectionStrategy,
-  NgZone,
-  ChangeDetectorRef,
-} from '@angular/core';
+  //import { ViewChildren, QueryList } from '@angular/core';
+  //import { ViewChild } from '@angular/core';
+  //import { BaseChartDirective } from 'ng2-charts';
+  //import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
+  //import * as ChartDataLabels from 'chartjs-plugin-datalabels';
+  //import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectionStrategy, NgZone, ChangeDetectorRef } from '@angular/core';
+  //import { SettingsService } from '@core';
+  //import { Subscription } from 'rxjs';
+  //import { DashboardService } from './dashboard.service';
+  //import { WebSocketService } from '@shared/services/websocket.service';
+  //import { API } from '@shared/services/ip.service';
+  //import { MainService } from '@shared/services/main.service';
+  //
+  //@Component({
+  //  selector: 'app-dashboard',
+  //  templateUrl: './dashboard.component.html',
+  //  styleUrls: ['./dashboard.component.scss'],
+  //  changeDetection: ChangeDetectionStrategy.OnPush,
+  //  providers: [DashboardService],
+  //})
+  //
+  //
+  //export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+  //  //@ViewChild(BaseChartDirective) chart!: BaseChartDirective;
+  //  @ViewChildren(BaseChartDirective) charts!: QueryList<BaseChartDirective>;
+  //  machineList: any = [];
+  //  stats: any = [];
+  //  intervalId: any;
+  //  dataList: any[] = [];
+  //  totalMachines = 0;
+  //  totalProductions = 0;
+  //  totalWaste = 0;
+  //  productionPercentage: number = 0;
+  //  wastePercentage: number = 0;
+  //
+  //  constructor(
+  //    private ngZone: NgZone,
+  //    private dashboardSrv: DashboardService,
+  //    private webSocketService: WebSocketService,
+  //    private service: MainService,
+  //    private settings: SettingsService,
+  //    private changeDetectorRef: ChangeDetectorRef
+  //  ) {}
+  //
+  //  ngOnInit() {
+  //    this.loadChartsData();
+  //    this.intervalId = setInterval(() => {
+  //      this.loadChartsData();
+  //    }, 10000);
+  //  }
+  //
+  //  ngAfterViewInit() {
+  //    this.ngZone.runOutsideAngular(() => this.initChart());
+  //  }
+  //
+  //  ngOnDestroy() {
+  //    clearInterval(this.intervalId);
+  //  }
+  //
+  //  initChart() {}
+  //
+  //  //loadChartsData() {
+  //  //  this.service.getMethod(API().getChartsData).subscribe((res: any) => {
+  //  //    this.machineList = [];
+  //  //    for (const [key, value] of Object.entries(res)) {
+  //  //      if (!this.machineList.some((element: any) => element.name === key))
+  //  //        this.machineList.push({ name: key, data: value });
+  //  //    }
+  //
+  //  //    this.dataList = [];
+  //  //    this.totalMachines = 0;
+  //  //    this.totalProductions = 0;
+  //  //    this.totalWaste = 0;
+  //  //    this.machineList.forEach((machine: any) => {
+  //  //      let totalProductions = 0;
+  //  //      let totalWaste = 0;
+  //  //      machine.data.forEach((data: any) => {
+  //  //        if (data.Name === 'Production') {
+  //  //          totalProductions += data.Value;
+  //  //        } else {
+  //  //          totalWaste += data.Value;
+  //  //        }
+  //  //      });
+  //  //      this.totalProductions += totalProductions;
+  //  //      this.totalWaste += totalWaste;
+  //  //      this.totalMachines++;
+  //
+  //  //      const productionPercentage = (totalProductions / (totalProductions + totalWaste)) * 100;
+  //  //      const wastePercentage = (totalWaste / (totalProductions + totalWaste)) * 100;
+  //
+  //  //      const chartData = {
+  //  //        chart: {
+  //  //          labels: ['Production', 'Waste'],
+  //  //          datasets: [
+  //  //            {
+  //  //              data: [productionPercentage, wastePercentage],
+  //  //              backgroundColor: ['#50C878', '#FF0000'],
+  //  //              hoverBackgroundColor: ['#50C878', '#FF0000'],
+  //  //            },
+  //  //          ],
+  //  //        },
+  //  //        options: {
+  //  //          title: {
+  //  //            display: true,
+  //  //            text: machine.name,
+  //  //            fontSize: 16,
+  //  //          },
+  //  //          legend: {
+  //  //            position: 'bottom',
+  //  //            onClick: (e: any) => e.stopPropagation(),
+  //  //          },
+  //  //          tooltips: {
+  //  //            enabled:true,
+  //  //            mode:'nearest',
+  //  //            intersect:false,
+  //  //            callbacks:{
+  //  //              label:(tooltipItem:any,data:any)=>{
+  //  //                const label=data.labels[tooltipItem.index];
+  //  //                const value=data.datasets[0].data[tooltipItem.index];
+  //  //                const percentage=value.toFixed(2)+'%';
+  //  //                return `${label}: ${percentage}`;
+  //  //              }
+  //  //            }
+  //  //          },
+  //  //          plugins: {
+  //  //            datalabels: {
+  //  //              color: '#fff',
+  //  //              font: {
+  //  //                weight: 'bold',
+  //  //                size: 14,
+  //  //              },
+  //  //              formatter: (value: any, context: any) => {
+  //  //                const label = context.chart.data.labels[context.dataIndex];
+  //  //                const percentage = value.toFixed(2) + '%';
+  //  //                return `${label}: ${percentage}`;
+  //  //              },
+  //  //            },
+  //  //          },
+  //  //          
+  //  //        },
+  //  //        name:machine.name
+  //  //      };
+  //
+  //  //      this.dataList.push(chartData);
+  //  //    });
+  //
+  //  //    this.stats=[
+  //  //      {title:'Total Machines',amount:this.totalMachines,color:'bg-indigo-500'},
+  //  //      {title:'Total Production',amount:this.totalProductions,color:'bg-blue-500'},
+  //  //      {title:'Total Waste',amount:this.totalWaste,color:'bg-green-500'}
+  //  //    ];
+  //  //    this.changeDetectorRef.detectChanges();
+  //  //    //this.chart.update();
+  //  //    //this.charts.forEach(chart => chart.update());
+  //  //    this.charts.forEach((chart: BaseChartDirective) => chart.update());
+  //  //  });
+  //  //}
+  ////  loadChartsData() {
+  ////    this.service.getMethod(API().getChartsData).subscribe((res: any) => {
+  ////      this.machineList = [];
+  ////      for (const [key, value] of Object.entries(res)) {
+  ////        if (!this.machineList.some((element: any) => element.name === key))
+  ////          this.machineList.push({ name: key, data: value });
+  ////      }
+  ////  
+  ////      this.totalMachines = 0;
+  ////      this.totalProductions = 0;
+  ////      this.totalWaste = 0;
+  ////      this.machineList.forEach((machine: any) => {
+  ////        let totalProductions = 0;
+  ////        let totalWaste = 0;
+  ////        machine.data.forEach((data: any) => {
+  ////          if (data.Name === 'Production') {
+  ////            totalProductions += data.Value;
+  ////          } else {
+  ////            totalWaste += data.Value;
+  ////          }
+  ////        });
+  ////        this.totalProductions += totalProductions;
+  ////        this.totalWaste += totalWaste;
+  ////        this.totalMachines++;
+  ////  
+  ////        const productionPercentage = (totalProductions / (totalProductions + totalWaste)) * 100;
+  ////        const wastePercentage = (totalWaste / (totalProductions + totalWaste)) * 100;
+  ////  
+  ////        // Find existing chartData object for this machine
+  ////        const chartData = this.dataList.find(cd => cd.name === machine.name);
+  ////        if (chartData) {
+  ////          // Update chart data
+  ////          chartData.chart.datasets[0].data = [productionPercentage, wastePercentage];
+  ////          // Update chart title
+  ////          chartData.options.title.text = machine.name;
+  ////        } else {
+  ////          // Create new chartData object if it doesn't exist
+  ////          const newChartData = {
+  ////            chart: {
+  ////              labels: ['Production', 'Waste'],
+  ////              datasets: [
+  ////                {
+  ////                  data: [productionPercentage, wastePercentage],
+  ////                  backgroundColor: ['#50C878', '#FF0000'],
+  ////                  hoverBackgroundColor: ['#50C878', '#FF0000'],
+  ////                },
+  ////              ],
+  ////            },
+  ////            options: {
+  ////              title: {
+  ////                display: true,
+  ////                text: machine.name,
+  ////                fontSize: 16,
+  ////              },
+  ////              //legend: {
+  ////              //  position: 'bottom',
+  ////              //  onClick: (e: any) => e.stopPropagation(),
+  ////              //},
+  ////              legend: {
+  ////                labels: {
+  ////                 generateLabels: function(chart) {
+  ////                   return chart.data.datasets[0].data.map(function(data, index) {
+  ////                     const label = chart.data.labels[index];
+  ////                     const value = chart.data.datasets[0].data[index];
+  ////                     const percentage = value.toFixed(2) + '%';
+  ////                     return {
+  ////                       text: `${label}: ${percentage}`,
+  ////                       fillStyle: chart.data.datasets[0].backgroundColor[index],
+  ////                       strokeStyle: chart.data.datasets[0].hoverBackgroundColor[index],
+  ////                       lineWidth: 2,
+  ////                       hidden: isNaN(data) || chart.getDatasetMeta(0).data[index].hidden,
+  ////                       index: index
+  ////                     };
+  ////                   });
+  ////                 }
+  ////                }
+  ////              },
+  ////           //}
+  ////              tooltips: {
+  ////                enabled:true,
+  ////                mode:'nearest',
+  ////                intersect:false,
+  ////                callbacks:{
+  ////                  label:(tooltipItem:any,data:any)=>{
+  ////                    const label=data.labels[tooltipItem.index];
+  ////                    const value=data.datasets[0].data[tooltipItem.index];
+  ////                    const percentage=value.toFixed(2)+'%';
+  ////                    return `${label}: ${percentage}`;
+  ////                  }
+  ////                }
+  ////              },
+  ////              plugins: {
+  ////                datalabels: {
+  ////                  color: '#000',
+  ////                  font: {
+  ////                    weight: 'bold',
+  ////                    size: 14,
+  ////                  },
+  ////                  formatter: (value: any, context: any) => {
+  ////                    const label = context.chart.data.labels[context.dataIndex];
+  ////                    const percentage = value.toFixed(2) + '%';
+  ////                    return `${label}: ${percentage}`;
+  ////                  },
+  ////                },
+  ////              },
+  ////            },
+  ////            name:machine.name
+  ////          };
+  ////  
+  ////          this.dataList.push(newChartData);
+  ////        }
+  ////      });
+  ////  
+  ////      this.stats=[
+  ////        {title:'Total Machines',amount:this.totalMachines,color:'bg-indigo-500'},
+  ////        {title:'Total Production',amount:this.totalProductions,color:'bg-blue-500'},
+  ////        {title:'Total Waste',amount:this.totalWaste,color:'bg-green-500'}
+  ////      ];
+  ////      this.changeDetectorRef.detectChanges();
+  ////      // Update charts
+  ////      this.charts.forEach((chart: BaseChartDirective) => chart.update());
+  ////    });
+  ////  }
+  ////
+  ////}
+  //
+  //loadChartsData() {
+  //  this.service.getMethod(API().getChartsData).subscribe((res: any) => {
+  //    this.machineList = [];
+  //    for (const [key, value] of Object.entries(res)) {
+  //      if (!this.machineList.some((element: any) => element.name === key))
+  //        this.machineList.push({ name: key, data: value });
+  //    }
+  //
+  //    this.totalMachines = 0;
+  //    this.totalProductions = 0;
+  //    this.totalWaste = 0;
+  //    this.machineList.forEach((machine: any) => {
+  //      let totalProductions = 0;
+  //      let totalWaste = 0;
+  //      machine.data.forEach((data: any) => {
+  //        if (data.Name === 'Production') {
+  //          totalProductions += data.Value;
+  //        } else {
+  //          totalWaste += data.Value;
+  //        }
+  //      });
+  //      this.totalProductions += totalProductions;
+  //      this.totalWaste += totalWaste;
+  //      this.totalMachines++;
+  //
+  //      const productionPercentage = (totalProductions / (totalProductions + totalWaste)) * 100;
+  //      const wastePercentage = (totalWaste / (totalProductions + totalWaste)) * 100;
+  //
+  //      // Find existing chartData object for this machine
+  //      const chartData = this.dataList.find(cd => cd.name === machine.name);
+  //      if (chartData) {
+  //        // Update chart data
+  //        chartData.chart.datasets[0].data = [productionPercentage, wastePercentage];
+  //        // Update chart title
+  //        chartData.options.title.text = machine.name;
+  //      } else {
+  //        // Create new chartData object if it doesn't exist
+  //        const newChartData = {
+  //          chart: {
+  //            labels: ['Production', 'Waste'],
+  //            datasets: [
+  //              {
+  //                data: [productionPercentage, wastePercentage],
+  //                backgroundColor: ['#50C878', '#FF0000'],
+  //                hoverBackgroundColor: ['#50C878', '#FF0000'],
+  //              },
+  //            ],
+  //          },
+  //          options: {
+  //            title: {
+  //              display: true,
+  //              text: machine.name,
+  //              fontSize: 16,
+  //            },
+  //            legend: {
+  //              labels: {
+  //                generateLabels(chart) {
+  //                  return chart.data.datasets[0].data.map(function(data, index) {
+  //                    const label = chart.data.labels[index];
+  //                    const value = chart.data.datasets[0].data[index];
+  //                    const percentage = value.toFixed(2) + '%';
+  //                    return {
+  //                      text: `${label}: ${percentage}`,
+  //                      fillStyle: chart.data.datasets[0].backgroundColor[index],
+  //                      strokeStyle: chart.data.datasets[0].hoverBackgroundColor[index],
+  //                      lineWidth: 2,
+  //                      hidden: isNaN(data) || chart.getDatasetMeta(0).data[index].hidden,
+  //                      index
+  //                    };
+  //                  });
+  //                }
+  //              }
+  //            },
+  //            tooltips: {
+  //              enabled:true,
+  //              mode:'nearest',
+  //              intersect:false,
+  //              callbacks:{
+  //                label(tooltipItem:any,data:any){
+  //                  const label=data.labels[tooltipItem.index];
+  //                  const value=data.datasets[0].data[tooltipItem.index];
+  //                  const percentage=value.toFixed(2)+'%';
+  //                  return `${label}: ${percentage}`;
+  //                }
+  //              }
+  //            },
+  //            plugins: {
+  //              datalabels: {
+  //                color: '#000',
+  //                font: {
+  //                  weight: 'bold',
+  //                  size: 14,
+  //                },
+  //                formatter(value:any, context:any) {
+  //                  const label = context.chart.data.labels[context.dataIndex];
+  //                  const percentage = value.toFixed(2) + '%';
+  //                  return `${label}: ${percentage}`;
+  //                },
+  //              },
+  //            },
+  //          },
+  //          name:machine.name
+  //        };
+  //
+  //        this.dataList.push(newChartData);
+  //      }
+  //    });
+  //
+  //    this.stats=[
+  //      {title:'Total Machines',amount:this.totalMachines,color:'bg-indigo-500'},
+  //      {title:'Total Production',amount:this.totalProductions,color:'bg-blue-500'},
+  //      {title:'Total Waste',amount:this.totalWaste,color:'bg-green-500'}
+  //    ];
+  //    this.changeDetectorRef.detectChanges();
+  //    // Update charts
+  //    this.charts.forEach((chart: BaseChartDirective) => chart.update());
+  //  });
+  //}
+  //
+import { ViewChildren, QueryList } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
+import * as ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Component, OnInit, AfterViewInit, OnDestroy, ChangeDetectionStrategy, NgZone, ChangeDetectorRef } from '@angular/core';
 import { SettingsService } from '@core';
 import { Subscription } from 'rxjs';
-import Chart from 'chart.js/auto';
 import { DashboardService } from './dashboard.service';
 import { WebSocketService } from '@shared/services/websocket.service';
 import { API } from '@shared/services/ip.service';
 import { MainService } from '@shared/services/main.service';
-/**
- * @title Basic cards
- */
 
 @Component({
   selector: 'app-dashboard',
@@ -25,40 +420,15 @@ import { MainService } from '@shared/services/main.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DashboardService],
 })
+
+
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+  //@ViewChild(BaseChartDirective) chart!: BaseChartDirective;
+  @ViewChildren(BaseChartDirective) charts!: QueryList<BaseChartDirective>;
   machineList: any = [];
-  series: any = [];
-  labels: any = [];
   stats: any = [];
   intervalId: any;
-  options = {
-    title: {
-      display: true,
-      text: 'My Title',
-      fontSize: 16,
-    },
-    legend: {
-      position: 'bottom',
-      onClick: (e: any) => e.stopPropagation(),
-    },
-    tooltips: {
-      enabled: true,
-      mode: 'nearest',
-      intersect: false,
-      callbacks: {
-        label: (tooltipItem: any, data: any) => {
-          let label = data.datasets[tooltipItem.datasetIndex].label || '';
-          let value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-          let percentage = value.toFixed(2) + '%';
-          //return `${label}: ${value} %`;
-          return `${label}: ${value} (${percentage})`;
-        }
-      }
-    }
-  };
-  notifySubscription!: Subscription;
-  data: any;
-  dataList: any = [];
+  dataList: any[] = [];
   totalMachines = 0;
   totalProductions = 0;
   totalWaste = 0;
@@ -72,36 +442,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private service: MainService,
     private settings: SettingsService,
     private changeDetectorRef: ChangeDetectorRef
-  ) {
-    this.dataList = [];
-    //  [{
-    //   chart: {
-    //   labels: ['No data avaliable'],
-    //   datasets: [
-    //       {
-    //           data: [0.001],
-    //           backgroundColor: [
-    //               "#FF6384",
-    //               "#36A2EB",
-    //               "#FFCE56"
-    //           ],
-    //           hoverBackgroundColor: [
-    //               "#FF6384",
-    //               "#36A2EB",
-    //               "#FFCE56"
-    //           ]
-    //       }]
-    //   },
-    //   name : ''
-    // }
-    // ];
-  }
+  ) {}
 
   ngOnInit() {
     this.loadChartsData();
-    this.notifySubscription = this.settings.notify.subscribe((res: any) => {
-      console.log(res);
-    });
     this.intervalId = setInterval(() => {
       this.loadChartsData();
     }, 10000);
@@ -113,83 +457,130 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.intervalId);
-    this.notifySubscription.unsubscribe();
   }
 
   initChart() {}
 
-  loadChartsData() {
+loadChartsData() {
     this.service.getMethod(API().getChartsData).subscribe((res: any) => {
-      console.log(res);
       this.machineList = [];
       for (const [key, value] of Object.entries(res)) {
-        if (this.machineList.filter((element: any) => element.name == key))
+        if (!this.machineList.some((element: any) => element.name === key))
           this.machineList.push({ name: key, data: value });
       }
-      console.log(this.machineList);
-      this.dataList = [];
+  
       this.totalMachines = 0;
       this.totalProductions = 0;
-      this.totalWaste = 0
-      this.machineList.forEach((machine: any, index: any) => {
-        this.series = [];
-        this.labels = [];
+      this.totalWaste = 0;
+      this.machineList.forEach((machine: any) => {
+        let totalProductions = 0;
+        let totalWaste = 0;
         machine.data.forEach((data: any) => {
-          if (data.Name == 'Production') {
-            this.totalProductions += data.Value;
+          if (data.Name === 'Production') {
+            totalProductions += data.Value;
           } else {
-            this.totalWaste += data.Value;
+            totalWaste += data.Value;
           }
-          // this.series.push(data.Value);
-          this.labels.push(data.Name);
-          let total = this.totalProductions + this.totalWaste;
-          this.productionPercentage = (this.totalProductions / total) * 100;
-          this.wastePercentage = (this.totalWaste / total) * 100;
         });
-        console.log(machine.data);
-        let chartData = {
-          chart: {
-            labels: this.labels,
-            datasets: [
-              {
-                data: [this.productionPercentage, this.wastePercentage],
-                backgroundColor: ['#50C878', '#FF0000', '#FFCE56'],
-                hoverBackgroundColor: ['#50C878', '#FF0000', '#FFCE56'],
+        this.totalProductions += totalProductions;
+        this.totalWaste += totalWaste;
+        this.totalMachines++;
+  
+        const productionPercentage = (totalProductions / (totalProductions + totalWaste)) * 100;
+        const wastePercentage = (totalWaste / (totalProductions + totalWaste)) * 100;
+  
+        // Find existing chartData object for this machine
+        const chartData = this.dataList.find(cd => cd.name === machine.name);
+        if (chartData) {
+          // Update chart data
+          chartData.chart.datasets[0].data = [productionPercentage, wastePercentage];
+          // Update chart title
+          chartData.options.title.text = machine.name;
+          console.log('chartData', chartData);
+        } else {
+          // Create new chartData object if it doesn't exist
+          const newChartData = {
+            chart: {
+              labels: ['Production', 'Waste'],
+              datasets: [
+                {
+                  data: [productionPercentage, wastePercentage],
+                  backgroundColor: ['#50C878', '#FF0000'],
+                  hoverBackgroundColor: ['#50C878', '#FF0000'],
+                },
+              ],
+            },
+            options: {
+              title: {
+                display: true,
+                text: machine.name,
+                fontSize: 16,
               },
-            ],
-          },
-          name: machine.name,
-        };
-        console.log(this.dataList);
-
-        this.dataList.push(chartData);
+              legend: {
+                labels: {
+                  generateLabels(chart: any) {
+                    console.log('generateLabels function called');
+                    return chart.data.datasets[0].data.map(function(data:any, index:any) {
+                      const label = chart.data.labels[index];
+                      const value = chart.data.datasets[0].data[index];
+                      const percentage = value.toFixed(2) + '%';
+                      return {
+                        text: `${label}:${value} ${percentage}`,
+                        fillStyle: chart.data.datasets[0].backgroundColor[index],
+                        strokeStyle: chart.data.datasets[0].hoverBackgroundColor[index],
+                        lineWidth: 2,
+                        hidden: isNaN(data) || chart.getDatasetMeta(0).data[index].hidden,
+                        index
+                      };
+                    });
+                  }
+                }
+              },
+              tooltips: {
+                enabled:true,
+                mode:'nearest',
+                intersect:false,
+                callbacks:{
+                  label(tooltipItem:any,data:any){
+                    const label=data.labels[tooltipItem.index];
+                    const value=data.datasets[0].data[tooltipItem.index];
+                    const percentage=value.toFixed(2)+'%';
+                    return `${label}: ${percentage}`;
+                  }
+                }
+              },
+              plugins: {
+                datalabels: {
+                  color: '#000',
+                  font: {
+                    weight: 'bold',
+                    size: 14,
+                  },
+                  formatter(value:any, context:any) {
+                    const label = context.chart.data.labels[context.dataIndex];
+                    const percentage = value.toFixed(2) + '%';
+                    return `${label}: ${percentage}`;
+                  },
+                },
+              },
+            },
+            name:machine.name
+          };
+  
+          this.dataList.push(newChartData);
+        }
       });
-      this.totalMachines = this.machineList.length;
-      this.stats = [
-        {
-          title: 'Total Machines',
-          amount: this.totalMachines,
-          color: 'bg-indigo-500',
-        },
-        {
-          title: 'Total Production',
-          amount: this.totalProductions,
-          color: 'bg-blue-500',
-        },
-        {
-          title: 'Total Waste',
-          amount: this.totalWaste,
-          color: 'bg-green-500',
-        },
+  
+      this.stats=[
+        {title:'Total Machines',amount:this.totalMachines,color:'bg-indigo-500'},
+        {title:'Total Production',amount:this.totalProductions,color:'bg-blue-500'},
+        {title:'Total Waste',amount:this.totalWaste,color:'bg-green-500'}
       ];
       this.changeDetectorRef.detectChanges();
+      // Update charts
+      this.charts.forEach((chart: BaseChartDirective) => chart.update());
     });
-
-    console.log(this.dataList);
   }
 
-  openWebSocketForCharts() {
-    const stompClient = this.webSocketService.connect();
-    stompClient.connect({}, (frame: any) => {});
-  }
 }
+

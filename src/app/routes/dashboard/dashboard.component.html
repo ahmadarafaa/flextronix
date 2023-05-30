@@ -23,28 +23,16 @@
 </div>
 <div class="row justify-content-center">
   <!-- Charts -->
-  <!-- <div *ngIf="dataList.length > 0"> -->
   <div class="col-md-3" *ngFor="let data of dataList">
-  <!-- <div class="col-md-3"> -->
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{data.name}}</mat-card-title>
-      </mat-card-header>
-        <mat-card-content >
-          <p-chart type="pie" [data]="data.chart" [options]="options"></p-chart>
-        </mat-card-content>
-    </mat-card>
-  </div>
-  <!-- <p>{{options.tooltips.callbacks.label}}</p> -->
-  <!-- </div> -->
-  <!-- <div class="col-md-3">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Weekly Revenue</mat-card-title>
+        <mat-card-title>{{ data.name }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div id="chart2"></div>
+        <!--  <p-chart type="pie" [data]="data.chart" [options]="data.options"></p-chart> -->
+        <p-chart #chart type="pie" [data]="data.chart" [options]="data.options"></p-chart>
       </mat-card-content>
     </mat-card>
-  </div> -->
+  </div>
 </div>
+

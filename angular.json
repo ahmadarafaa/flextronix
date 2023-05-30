@@ -20,7 +20,9 @@
             "allowedCommonJsDependencies": [
               "base64-js",
               "moment",
-              "photoviewer"
+              "photoviewer",
+              "sockjs-client",
+              "stompjs"
             ],
             "outputPath": "dist/ng-matero",
             "index": "src/index.html",

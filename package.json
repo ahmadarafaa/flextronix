@@ -45,6 +45,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "angular-in-memory-web-api": "~0.15.0",
     "chart.js": "^4.3.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.41",
     "ngx-permissions": "^15.0.1",
